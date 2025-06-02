@@ -9,12 +9,12 @@ from transformers import modeling_utils
 if modeling_utils.ALL_PARALLEL_STYLES is None:
     modeling_utils.ALL_PARALLEL_STYLES = ["tp", "none", "colwise", 'rowwise']
 
-from dataset import dataset_main
+from data.dataset import dataset_main
 
 # DS_CONFIG = "./DS_config/ds_zero2_no_offload.json"
 qwen3_model_path = '/Users/ethanliu/Documents/models/Qwen/Qwen3-0.6B'
 save_model_path = './lora_qwen3-0.6B'
-json_file = "./sighan_2015/train.json"
+json_file = "./data/sighan_2015/train.json"
 
 
 def main():
@@ -34,7 +34,7 @@ def main():
 
     # 配置训练参数
     args = TrainingArguments(
-        output_dir="./lora_train",
+        output_dir="lora_train",
         per_device_train_batch_size=1,
         gradient_accumulation_steps=4,
         logging_steps=10,
