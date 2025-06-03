@@ -10,3 +10,7 @@ videos
 out_lora_train
 lora_models
 merged_model
+
+!./models/Qwen/down_MS_model.py
+!down_HF_model.py
+models
