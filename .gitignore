@@ -14,4 +14,5 @@ merged_model
 /models/*
 !/models/down_MS_model.py
 !/models/down_HF_model.py
+!/models/test.py
 
