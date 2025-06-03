@@ -11,6 +11,7 @@ out_lora_train
 lora_models
 merged_model
 
+models
 !./models/down_MS_model.py
 !down_HF_model.py
-models
+
