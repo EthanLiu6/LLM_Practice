@@ -11,6 +11,7 @@ from transformers import modeling_utils
 
 from data.dataset import dataset_main
 
+from lora_qwen3_config import *
 # # DS_CONFIG = "./DS_config/ds_zero2_no_offload.json"
 # qwen3_model_path = '/mnt/workspace/model_list/Qwen/Qwen3-8B'
 # save_model_path = './lora_models/lora_qwen3-8B—TextCorrection'
