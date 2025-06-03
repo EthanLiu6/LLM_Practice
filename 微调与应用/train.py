@@ -6,16 +6,16 @@ from transformers import Trainer, TrainingArguments
 
 from transformers import modeling_utils
 
-if modeling_utils.ALL_PARALLEL_STYLES is None:
-    modeling_utils.ALL_PARALLEL_STYLES = ["tp", "none", "colwise", 'rowwise']
+# if modeling_utils.ALL_PARALLEL_STYLES is None:
+    # modeling_utils.ALL_PARALLEL_STYLES = ["tp", "none", "colwise", 'rowwise']
 
 from data.dataset import dataset_main
 
-# DS_CONFIG = "./DS_config/ds_zero2_no_offload.json"
-qwen3_model_path = '/Users/ethanliu/Documents/models/Qwen/Qwen3-0.6B'
-save_model_path = './lora_qwen3-0.6B'
-json_file = "./data/sighan_2015/train.json"
-
+# # DS_CONFIG = "./DS_config/ds_zero2_no_offload.json"
+# qwen3_model_path = '/mnt/workspace/model_list/Qwen/Qwen3-8B'
+# save_model_path = './lora_models/lora_qwen3-8B—TextCorrection'
+# json_file = "./data/sighan_2015/train.json"
+# output_dir = './out_lora_train'
 
 def main():
     tokenizer = AutoTokenizer.from_pretrained(qwen3_model_path)
@@ -32,9 +32,13 @@ def main():
 
     lora_model = get_peft_model(model=qwen3_model, peft_config=lora_config)
 
+    for name, param in lora_model.named_parameters():
+        if param.requires_grad:
+            print(name, "is trainable")
+
     # 配置训练参数
     args = TrainingArguments(
-        output_dir="lora_train",
+        output_dir=output_dir,
         per_device_train_batch_size=1,
         gradient_accumulation_steps=4,
         logging_steps=10,
@@ -43,7 +47,8 @@ def main():
         save_steps=50,
         learning_rate=2e-4,
         save_on_each_node=True,
-        gradient_checkpointing=True,
+        gradient_checkpointing=False, 
+        # gradient_checkpointing=True,
         report_to="none",
         # bf16=True,
         fp16=True,
