@@ -7,11 +7,13 @@ from transformers import Trainer, TrainingArguments
 from transformers import modeling_utils
 
 # if modeling_utils.ALL_PARALLEL_STYLES is None:
-    # modeling_utils.ALL_PARALLEL_STYLES = ["tp", "none", "colwise", 'rowwise']
+#     modeling_utils.ALL_PARALLEL_STYLES = ["tp", "none", "colwise", 'rowwise']
 
 from data.dataset import dataset_main
 
 from lora_qwen3_config import *
+
+# these move to 'lora_qwen3_config.py'
 # # DS_CONFIG = "./DS_config/ds_zero2_no_offload.json"
 # qwen3_model_path = '/mnt/workspace/model_list/Qwen/Qwen3-8B'
 # save_model_path = './lora_models/lora_qwen3-8B—TextCorrection'
@@ -48,7 +50,7 @@ def main():
         save_steps=50,
         learning_rate=2e-4,
         save_on_each_node=True,
-        gradient_checkpointing=False, 
+        gradient_checkpointing=False,
         # gradient_checkpointing=True,
         report_to="none",
         # bf16=True,
@@ -72,7 +74,6 @@ def main():
 
     trainer.train()
     trainer.save_model(save_model_path)
-
 
 
 if __name__ == '__main__':
