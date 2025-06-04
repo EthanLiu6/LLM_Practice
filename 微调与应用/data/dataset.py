@@ -1,9 +1,17 @@
 from datasets import Dataset
 from transformers import AutoTokenizer
+import json
 
 
 def load_json_dataset(json_file):
-    return Dataset.from_json(json_file)
+    with open(json_file, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+
+    # 如果 data 是 dict 并且有 'data' 字段，则取出来
+    if isinstance(data, dict) and 'data' in data:
+        data = data['data']
+
+    return Dataset.from_list(data)
 
 
 def process_func_single(example, tokenizer):
